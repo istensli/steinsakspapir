@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stein, saks, papir</title>
+
+    <style>
+        img{
+            height: 199px;
+            width: 199px;
+        }
+        #page{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+        }
+        #container{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+        .stein-saks-papir-div{
+            height: 200px;
+            width: 200px;
+            text-align: center;
+            line-height: 200px;
+        }
+        #stein-div{
+            background-color: aquamarine;
+
+        }
+        #saks-div{
+            background-color: blueviolet;
+        }
+        #papir-div{
+            background-color: chocolate;
+        }
+        #kamp-div{
+            height: 200px;
+            width: 600px;
+            border: 1px solid black;
+
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            
+
+        }
+        #winner-div{
+            height: 200px;
+            width: 600px;
+            text-align: center;
+            line-height: 200px;
+            border: 1px solid black;
+            font-size: 50px;
+        }
+
+
+        
+    </style>
+</head>
+<body>
+    <div id="page">
+        <div id="button-div">
+            <button onclick="resetGame()">Reset</button>
+        </div>
+        <div id="container">
+            <div class="stein-saks-papir-div" id="stein-div" onclick="playerChooseItem('stein')">Stein</div>
+            <div class="stein-saks-papir-div" id="saks-div" onclick="playerChooseItem('saks')">Saks</div>
+            <div class="stein-saks-papir-div" id="papir-div" onclick="playerChooseItem('papir')">Papir</div>
+        </div>
+        <div id="kamp-div"></div>
+        <div id="winner-div"></div>
+
+    </div>
+
+    <script>
+        
+        //OBS! Denne oppgaven er ikke løst med MVC!
+
+        let playerChosenItem = 0;
+        let computerChosenItem = 0;
+        let winner = "";
+
+        let image1HTML = "";
+        let image2HTML = "";
+        let kampDiv = document.getElementById('kamp-div');
+
+
+
+        function playerChooseItem(itemName){
+            if(itemName == 'stein') playerChosenItem = 0;
+
+            else if(itemName == 'saks') playerChosenItem = 1;
+
+            else if(itemName == 'papir') playerChosenItem = 2;
+
+            else{
+                console.log('invalid parameter usage in chooseItems()');
+            }
+            computerChooseItem();
+            setPictures();
+            showWinner();
+
+
+        }
+        function getRandomNumber(){
+            return Math.floor(Math.random() * 3);
+        }
+
+        function computerChooseItem(){
+            computerChosenItem = getRandomNumber();
+        }
+
+        function setPictures(){
+            image1HTML = `<img id="playerImage" src="images/pic${playerChosenItem}.png">`;
+            image2HTML = `<img id="computerImage" src="images/pic${computerChosenItem}.png">`;
+            kampDiv.innerHTML = image1HTML + image2HTML;
+
+
+        }
+        function showWinner(){
+            if (playerChosenItem == computerChosenItem) winner = "Its a draw! Try again..";
+            else if ((playerChosenItem == 0) && (computerChosenItem == 1)) winner = "Player wins!";
+            else if ((playerChosenItem == 0) && (computerChosenItem == 2)) winner = "Computer wins!";
+            else if ((playerChosenItem == 1) && (computerChosenItem == 0)) winner = "Computer wins!";
+            else if ((playerChosenItem == 1) && (computerChosenItem == 2)) winner = "Player wins!";
+            else if ((playerChosenItem == 2) && (computerChosenItem == 0)) winner = "Player wins!";
+            else if ((playerChosenItem == 2) && (computerChosenItem == 1)) winner = "Computer wins!";
+            document.getElementById('winner-div').innerHTML = winner;
+        }
+
+        function resetGame(){
+            
+            playerChosenItem = 0;
+            computerChosenItem = 0;
+            winner = "";
+
+            image1HTML = "";
+            image2HTML = "";
+            kampDiv.innerHTML = "";
+            document.getElementById('winner-div').innerHTML = "";
+
+        }
+        
+
+
+
+    </script>
+
+    
+</body>
+</html>
